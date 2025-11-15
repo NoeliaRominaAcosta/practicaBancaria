@@ -2,6 +2,15 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo.
 
+## [1.0.3] - 2025-15-11
+
+### Agregado (Added)
+- Se agregó el archivo `TROUBLESHOOTING.md` con una guía para solucionar problemas comunes.
+
+### Corregido (Fixed)
+- Se configuró explícitamente el `maven-compiler-plugin` en el `pom.xml` para asegurar que el proyecto se compile con la versión de Java correcta.
+- Se actualizó la propiedad `java.version` a 17 en el `pom.xml`.
+
 ## [1.0.2] - 2025-15-11
 
 ### Agregado (Added)

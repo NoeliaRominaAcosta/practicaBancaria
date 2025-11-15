@@ -73,7 +73,18 @@ Se deben modelar las siguientes entidades JPA:
 
 El proyecto usa Swagger para la documentación del API. Una vez que la aplicación está corriendo, se puede acceder a la documentación en `http://localhost:8080/swagger-ui.html`.
 
+## 7. Solución de Problemas
+
+
+
+Se ha creado un archivo `TROUBLESHOOTING.md` con instrucciones detalladas para solucionar problemas comunes.
+
+
+
 ## Cómo ejecutar la aplicación
 
+
+
 1.  Iniciar la base de datos usando `docker-compose up -d`.
+
 2.  Ejecutar la aplicación usando `mvn spring-boot:run`.
