@@ -1,0 +1,5 @@
+com\example\corebancario\DemoApplicationTests.class
+com\example\corebancario\PrestamoControllerTests.class
+com\example\corebancario\CuentaControllerTests.class
+com\example\corebancario\TarjetaControllerTests.class
+com\example\corebancario\ClienteControllerTests.class
