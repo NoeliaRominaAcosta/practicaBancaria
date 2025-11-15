@@ -2,9 +2,11 @@
 
 Esta es una API RESTful para una simulación de core bancario, construida con Java 17 y Spring Boot 3. El proyecto simula operaciones bancarias básicas (Cuentas, Tarjetas y Préstamos) y es un ejemplo de código de nivel Senior, adhiriéndose estrictamente a los principios SOLID, Código Limpio (Clean Code), y demostrando el uso eficaz de Patrones de Diseño.
 
+**Nota:** La especificación original solicitaba Java 21, pero debido al entorno local, el proyecto se desarrolló con Java 17.
+
 ## 1. Stack Tecnológico y Configuración
 
-* **Lenguaje**: Java 21
+* **Lenguaje**: Java 17
 * **Framework**: Spring Boot 3.x (usando Web, Data JPA, Validation)
 * **Base de Datos**: MySQL 8
 * **Contenerización**: La base de datos MySQL debe ejecutarse exclusivamente a través de un archivo `docker-compose.yml` preconfigurado con un usuario, contraseña y base de datos inicial.
@@ -16,7 +18,7 @@ Esta es una API RESTful para una simulación de core bancario, construida con Ja
 * **Patrones de Diseño (Implementación Obligatoria)**:
     * **Patrón Strategy (Estrategia)**: Usado para lógicas de negocio intercambiables.
         * **Ejemplo 1**: Múltiples estrategias para calcular intereses de préstamos (ej. `InteresSimpleStrategy`, `InteresCompuestoStrategy`).
-        * **Ejemplo 2**: Múltiples estrategias de descuento para tarjetas (ej. `DescuentoSupermercadoStrategy`, `DescuentoClienteGoldStrategy`).
+        * **Ejemplo 2**: Múltiples estrategias de descuento para tarjetas (ej. `DescuentoSupermercadoStrategy`, `DescuentoClienteGoldStrategy`, `DescuentoPorMontoStrategy`).
     * **Patrón Factory (Fábrica) (o Factory Method)**: Usado para crear objetos complejos.
         * **Ejemplo**: Un `LoanFactory` que crea diferentes tipos de objetos `Prestamo` según la solicitud del cliente.
     * **Patrón Builder (Constructor)**: Usado para la construcción de las entidades principales (ej. `Cliente`, `Prestamo`) para asegurar su creación en un estado válido.

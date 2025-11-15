@@ -17,10 +17,12 @@ public class TarjetaServiceImpl implements TarjetaService {
 
     private final TarjetaRepository tarjetaRepository;
     private final List<IDescuentoStrategy> descuentoStrategies;
+    private final TransaccionService transaccionService;
 
-    public TarjetaServiceImpl(TarjetaRepository tarjetaRepository, List<IDescuentoStrategy> descuentoStrategies) {
+    public TarjetaServiceImpl(TarjetaRepository tarjetaRepository, List<IDescuentoStrategy> descuentoStrategies, TransaccionService transaccionService) {
         this.tarjetaRepository = tarjetaRepository;
         this.descuentoStrategies = descuentoStrategies;
+        this.transaccionService = transaccionService;
     }
 
     @Override
@@ -45,12 +47,14 @@ public class TarjetaServiceImpl implements TarjetaService {
         }
 
         for (IDescuentoStrategy strategy : descuentoStrategies) {
-            if (strategy.esAplicable(monto)) {
+            if (strategy.esAplicable(tarjeta.getCuenta().getCliente(), monto)) {
                 BigDecimal descuento = strategy.aplicarDescuento(monto);
                 // Apply discount logic here, e.g., cashback to the account
                 tarjeta.getCuenta().setBalance(tarjeta.getCuenta().getBalance() + descuento.doubleValue());
             }
         }
+
+        transaccionService.registrarTransaccion(monto, com.example.corebancario.model.TipoTransaccion.PAGO_TARJETA);
 
         tarjetaRepository.save(tarjeta);
     }

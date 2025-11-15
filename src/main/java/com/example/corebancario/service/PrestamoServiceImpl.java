@@ -5,20 +5,26 @@ import com.example.corebancario.model.Cuenta;
 import com.example.corebancario.model.Prestamo;
 import com.example.corebancario.repository.CuentaRepository;
 import com.example.corebancario.repository.PrestamoRepository;
+import com.example.corebancario.strategy.IInteresStrategy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Service
 public class PrestamoServiceImpl implements PrestamoService {
 
     private final PrestamoRepository prestamoRepository;
     private final CuentaRepository cuentaRepository;
+    private final Map<String, IInteresStrategy> interesStrategies;
+    private final TransaccionService transaccionService;
 
-    public PrestamoServiceImpl(PrestamoRepository prestamoRepository, CuentaRepository cuentaRepository) {
+    public PrestamoServiceImpl(PrestamoRepository prestamoRepository, CuentaRepository cuentaRepository, Map<String, IInteresStrategy> interesStrategies, TransaccionService transaccionService) {
         this.prestamoRepository = prestamoRepository;
         this.cuentaRepository = cuentaRepository;
+        this.interesStrategies = interesStrategies;
+        this.transaccionService = transaccionService;
     }
 
     @Override
@@ -28,7 +34,13 @@ public class PrestamoServiceImpl implements PrestamoService {
                 .orElseThrow(() -> new RuntimeException("Prestamo not found"));
 
         BigDecimal montoCuota = pagoCuotaDTO.monto();
-        BigDecimal interes = montoCuota.multiply(prestamo.getTasaInteres());
+
+        IInteresStrategy interesStrategy = interesStrategies.get("interesSimple"); // Default strategy
+        if (prestamo.getMonto().compareTo(new BigDecimal("10000")) > 0) {
+            interesStrategy = interesStrategies.get("interesCompuesto");
+        }
+
+        BigDecimal interes = interesStrategy.calcularInteres(montoCuota);
         BigDecimal totalAPagar = montoCuota.add(interes);
 
         Cuenta cuenta = prestamo.getCliente().getCuentas().stream().findFirst()
@@ -40,6 +52,8 @@ public class PrestamoServiceImpl implements PrestamoService {
 
         cuenta.setBalance(cuenta.getBalance() - totalAPagar.doubleValue());
         prestamo.setMonto(prestamo.getMonto().subtract(montoCuota));
+
+        transaccionService.registrarTransaccion(totalAPagar, com.example.corebancario.model.TipoTransaccion.PAGO_PRESTAMO);
 
         cuentaRepository.save(cuenta);
         prestamoRepository.save(prestamo);

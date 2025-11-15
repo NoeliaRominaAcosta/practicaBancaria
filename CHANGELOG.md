@@ -1,7 +1,22 @@
 # Changelog
 
 Todos los cambios notables en este proyecto serán documentados en este archivo.
-## [1.0.1] - 2024-10-01
+
+## [1.0.2] - 2025-15-11
+
+### Agregado (Added)
+- Se implementaron estrategias de cálculo de intereses de préstamos: `IInteresStrategy`, `InteresSimpleStrategy` e `InteresCompuestoStrategy`.
+- Se implementaron estrategias de descuento de tarjetas: `DescuentoSupermercadoStrategy` y `DescuentoClienteGoldStrategy`.
+- Se implementó el `TransaccionService` para registrar transacciones.
+
+### Corregido (Fixed)
+- Se actualizó la versión de Java a 17 en `pom.xml`.
+- Se actualizaron las estrategias de descuento para aceptar un objeto `Cliente`.
+- Se actualizó el `TarjetaServiceImpl` para pasar el `Cliente` a las estrategias de descuento.
+- Se actualizó el `PrestamoServiceImpl` para usar las estrategias de interés.
+- Se actualizaron los archivos `README.md` y `CHANGELOG.md`.
+
+## [1.0.1] - 2025-15-11
 
 ### Agregado (Added)
 - Se crearon tests unitarios para los controladores.

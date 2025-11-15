@@ -1,5 +1,6 @@
 package com.example.corebancario.strategy;
 
+import com.example.corebancario.model.Cliente;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -16,7 +17,7 @@ public class DescuentoPorMontoStrategy implements IDescuentoStrategy {
     }
 
     @Override
-    public boolean esAplicable(BigDecimal monto) {
+    public boolean esAplicable(Cliente cliente, BigDecimal monto) {
         return monto.compareTo(MONTO_MINIMO) > 0;
     }
 }
