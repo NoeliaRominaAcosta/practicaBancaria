@@ -35,12 +35,12 @@ public class PrestamoServiceImpl implements PrestamoService {
 
         BigDecimal montoCuota = pagoCuotaDTO.monto();
 
-        IInteresStrategy interesStrategy = interesStrategies.get("interesSimple"); // Default strategy
+        IInteresStrategy interesStrategy = interesStrategies.get("interesSimple"); // Default
         if (prestamo.getMonto().compareTo(new BigDecimal("10000")) > 0) {
             interesStrategy = interesStrategies.get("interesCompuesto");
         }
 
-        BigDecimal interes = interesStrategy.calcularInteres(montoCuota);
+        BigDecimal interes = interesStrategy.calcularInteres(montoCuota); //sabe a cual estrategia llamar en base al get que hizo y luego cada strategy contiene un @Component se usa como la clave en el Map que el servicio usa para seleccionar la estrategia
         BigDecimal totalAPagar = montoCuota.add(interes);
 
         Cuenta cuenta = prestamo.getCliente().getCuentas().stream().findFirst()
