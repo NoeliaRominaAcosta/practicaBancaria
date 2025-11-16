@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2025, Noelia Romina Acosta
+ * All rights reserved.
+ */
+
 package com.example.corebancario;
 
 import org.springframework.boot.SpringApplication;
